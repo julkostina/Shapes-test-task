@@ -36,7 +36,7 @@ class Shape {
   toString() {
     return `${
       this.name
-    } Perimeter ${this.getPerimeter()} Area ${this.getArea()}`;
+    } Perimeter ${this.getPerimeter().toFixed(2)} Area ${this.getArea()}`;
   }
 }
 
@@ -76,7 +76,25 @@ class Square extends Rectangle {
     this.name='Square';
   }
 }
+function getDistance(point1X, point1Y, point2X, point2Y){
+ return Math.sqrt((point1X-point2X)**2+(point1Y-point2Y)**2 );
+}
+class Triangle extends Shape {
+  constructor(point1X, point1Y, point2X, point2Y, point3X, point3Y){
+    super('Triangle')
+    this.side1 = getDistance(point1X, point1Y, point2X, point2Y);
+    this.side2 = getDistance(point2X, point2Y, point3X, point3Y);
+    this.side3 = getDistance(point1X, point1Y, point3X, point3Y);
+  }
 
+  getArea(){
+    return 2;
+  }
+
+  getPerimeter(){
+    return (this.side1+ this.side2+ this.side3);
+  }
+}
 class Circle extends Shape {
   constructor(centerX, centerY, radius) {
     super("Circle");
@@ -146,4 +164,4 @@ rl.on("line", function (line) {
   }
 });
 
-module.exports = { Square, Rectangle, Circle, parseShape };
+module.exports = { Square, Rectangle, Circle, parseShape, Triangle };

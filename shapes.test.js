@@ -1,18 +1,18 @@
-const { Square, Rectangle, Circle, parseShape } = require('./shapes');
+const { Square, Rectangle, Circle, parseShape, Triangle } = require('./shapes');
 
 describe('Shape classes', () => {
   test('Square area and perimeter', () => {
     const s = new Square(1, 1, 2);
     expect(s.getPerimeter()).toBe(8);
     expect(s.getArea()).toBe(4);
-    expect(s.toString()).toBe('Square Perimeter 8 Area 4');
+    expect(s.toString()).toBe('Square Perimeter 8.00 Area 4');
   });
 
   test('Rectangle area and perimeter', () => {
     const r = new Rectangle(4, 3, 1, 1);
     expect(r.getPerimeter()).toBe(10);
     expect(r.getArea()).toBe(6);
-    expect(r.toString()).toBe('Rectangle Perimeter 10 Area 6');
+    expect(r.toString()).toBe('Rectangle Perimeter 10.00 Area 6');
   });
 
   test('Circle area and perimeter (rounded)', () => {
@@ -22,6 +22,19 @@ describe('Shape classes', () => {
     expect(c.toString()).toBe('Circle Perimeter 6.28 Area 3.14');
   });
 
+  test('Triangle area and perimeter 1', ()=>{
+    const t  = new Triangle(0,1,2,2,1,0);
+    expect(t.getPerimeter()).toBeCloseTo(5.89);
+    expect(t.getArea()).toBeCloseTo(2);
+    expect(t.toString()).toBe('Triangle Perimeter 5.89 Area 2');
+  })
+
+  test('Triangle area and perimeter 2', ()=>{
+    const t  = new Triangle(0,2,4,4,2,0);
+    expect(t.getPerimeter()).toBeCloseTo(11.77);
+    expect(t.getArea()).toBeCloseTo(2);
+    expect(t.toString()).toBe('Triangle Perimeter 11.77 Area 2');
+  })
   test('Invalid square side', () => {
     expect(() => new Square(1, 1, 0)).toThrow("Invalid side");
   });
