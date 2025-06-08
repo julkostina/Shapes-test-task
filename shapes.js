@@ -34,25 +34,9 @@ class Shape {
   }
 
   toString() {
-    return `${this.name} Perimeter ${this.getPerimeter()} Area ${this.getArea()}`;
-  }
-}
-
-class Square extends Shape {
-  constructor(topRightX, topRightY, side) {
-    super("Square");
-    if (!side || side <= 0) {
-      throw new Error(`Invalid side length for a square`);
-    }
-    this.side = side;
-  }
-
-  getPerimeter() {
-    return this.side * 4;
-  }
-
-  getArea() {
-    return this.side ** 2;
+    return `${
+      this.name
+    } Perimeter ${this.getPerimeter()} Area ${this.getArea()}`;
   }
 }
 
@@ -61,8 +45,10 @@ class Rectangle extends Shape {
     super("Rectangle");
     this.height = Math.abs(topRightX - bottomLeftX);
     this.width = Math.abs(topRightY - bottomLeftY);
-    if( this.height <= 0 || this.width <= 0) {
-      throw new Error(`Invalid dimensions for rectangle: height ${this.height}, width ${this.width}`);
+    if (this.height <= 0 || this.width <= 0) {
+      throw new Error(
+        `Invalid dimensions for rectangle: height ${this.height}, width ${this.width}`
+      );
     }
   }
 
@@ -75,6 +61,22 @@ class Rectangle extends Shape {
   }
 }
 
+class Square extends Rectangle {
+  constructor(topRightX, topRightY, side) {
+    if (!side || side <= 0) {
+      throw new Error(`Invalid side length for a square`);
+    }
+    super(
+      topRightX,
+      topRightY,
+      topRightX - side,
+      topRightY - side
+    );
+    this.side = side;
+    this.name='Square';
+  }
+}
+
 class Circle extends Shape {
   constructor(centerX, centerY, radius) {
     super("Circle");
@@ -82,9 +84,11 @@ class Circle extends Shape {
       throw new Error(`Invalid radius for circle: ${radius}`);
     }
     this.radius = radius;
-    if( centerX === undefined || centerY === undefined) {
-      throw new Error(`Invalid center coordinates for circle: (${centerX}, ${centerY})`);
-    }    
+    if (centerX === undefined || centerY === undefined) {
+      throw new Error(
+        `Invalid center coordinates for circle: (${centerX}, ${centerY})`
+      );
+    }
   }
 
   getPerimeter() {
@@ -101,23 +105,31 @@ function parseShape(line) {
   const shapeType = tokens[0];
 
   switch (shapeType.toLowerCase()) {
-    case 'square':
-      return new Square(parseFloat(tokens[2]), parseFloat(tokens[3]), parseFloat(tokens[5]));
-    case 'rectangle':
+    case "square":
+      return new Square(
+        parseFloat(tokens[2]),
+        parseFloat(tokens[3]),
+        parseFloat(tokens[5])
+      );
+    case "rectangle":
       return new Rectangle(
         parseFloat(tokens[2]),
         parseFloat(tokens[3]),
         parseFloat(tokens[5]),
         parseFloat(tokens[6])
       );
-    case 'circle':
-      return new Circle(parseFloat(tokens[2]), parseFloat(tokens[3]), parseFloat(tokens[5]));
+    case "circle":
+      return new Circle(
+        parseFloat(tokens[2]),
+        parseFloat(tokens[3]),
+        parseFloat(tokens[5])
+      );
     default:
       throw new Error(`Unknown shape: ${shapeType}`);
   }
 }
 
-const readline = require('readline');
+const readline = require("readline");
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -125,7 +137,7 @@ const rl = readline.createInterface({
   terminal: false,
 });
 
-rl.on('line', function (line) {
+rl.on("line", function (line) {
   try {
     const shape = parseShape(line);
     console.log(shape.toString());
